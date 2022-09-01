@@ -33,11 +33,11 @@ provisioner "remote-exec" {
   }
 
    provisioner "local-exec" {
-    command = "open http://${self.public_ip}:5601"
+    command = "sleep 3 && open http://${self.public_ip}:5601 || xdg-open http://${self.public_ip}:5601"
   } 
 
   tags = {
-    Name = "terra_ELK"
+    Name = "terra_ELK_master"
   }
 }
 
@@ -58,5 +58,8 @@ provisioner "remote-exec" {
       private_key = file(var.key)
       host        = self.public_ip
     }
+  }
+  tags = {
+    Name = "terra_ELK_agent"
   }
 }
