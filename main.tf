@@ -21,7 +21,7 @@ provisioner "remote-exec" {
       "sudo chown $USER /var/run/docker.sock",
       "git clone https://github.com/deviantony/docker-elk.git",
       "cd docker-elk && docker-compose up -d",
-      "docker-compose exec elasticsearch bin/elasticsearch-reset-password --batch --user elastic",
+      "docker-compose exec elasticsearch bin/elasticsearch-reset-password --batch --user elastic -i ${var.elastic_password}",
       "docker ps",
     ]
     connection {
