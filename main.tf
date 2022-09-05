@@ -23,8 +23,7 @@ provisioner "remote-exec" {
       "echo LOGSTASH_INTERNAL_PASSWORD=${var.ELK_PASSWORD} >> .env ",
       "echo KIBANA_SYSTEM_PASSWORD=${var.ELK_PASSWORD} >> .env ",
       "sudo docker-compose up -d",
-      "sudo docker ps && sleep 5",
-      # "sudo docker exec docker-elk_elasticsearch_1 bash -c 'yes | ./bin/elasticsearch-reset-password -u elastic -a > passwords.txt; cat passwords.txt ; ls'",
+      "sudo docker ps",
     ]
     connection {
       type        = "ssh"
@@ -52,8 +51,8 @@ vpc_security_group_ids = [var.security_group]
 provisioner "remote-exec" {
     inline = [
       #!/bin/bash
-      # "sudo apt update -y",
-      "uname -v",
+      "curl -L -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.4.1-linux-x86_64.tar.gz",
+      "tar xzvf elastic-agent-8.4.1-linux-x86_64.tar.gz", 
     ]
     connection {
       type        = "ssh"
