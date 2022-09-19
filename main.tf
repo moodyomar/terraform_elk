@@ -52,7 +52,11 @@ provisioner "remote-exec" {
     inline = [
       #!/bin/bash
       "curl -L -O https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.4.1-linux-x86_64.tar.gz",
-      "tar xzvf elastic-agent-8.4.1-linux-x86_64.tar.gz", 
+      "tar xzvf elastic-agent-8.4.1-linux-x86_64.tar.gz",
+      "sed -i 's/changeme/${var.ELK_PASSWORD}/' elastic-agent-8.4.1-linux-x86_64/elastic-agent.yml",
+      "sed -i 's/127.0.0.1/${self.public_ip}/' elastic-agent-8.4.1-linux-x86_64/elastic-agent.yml",
+      "sed -i 's/# username/ username/' elastic-agent-8.4.1-linux-x86_64/elastic-agent.yml",
+      "sed -i 's/# password/ password/' elastic-agent-8.4.1-linux-x86_64/elastic-agent.yml",
     ]
     connection {
       type        = "ssh"
